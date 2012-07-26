@@ -18,7 +18,8 @@ public enum RichfacesLogger {
     COMPONENTS("Components"),
     WEBAPP("Webapp"),
     UTIL("Util"),
-    MODEL("Model");
+    MODEL("Model"),
+    TEST("Test");
     private static final String LOGGER_NAME_PREFIX = "org.richfaces.log.";
     private String loggerName;
 

@@ -27,11 +27,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.atmosphere.cpr.AtmosphereResourceEvent;
 import org.atmosphere.cpr.AtmosphereResourceEventListener;
+import org.atmosphere.cpr.Broadcaster;
 import org.atmosphere.cpr.BroadcasterLifeCyclePolicy;
+import org.atmosphere.cpr.BroadcasterListener;
 import org.atmosphere.cpr.Meteor;
 import org.atmosphere.websocket.WebSocket;
 import org.richfaces.application.push.Request;
 import org.richfaces.application.push.Session;
+import org.richfaces.application.push.impl.SessionManagerImpl.DestroyableSession;
 import org.richfaces.log.Logger;
 import org.richfaces.log.RichfacesLogger;
 
@@ -57,9 +60,7 @@ public class RequestImpl implements Request, AtmosphereResourceEventListener {
 
         // Set policy to EMPTY_DESTROY so that Broadcaster is removed from BroadcasterFactory and releases resources if
         // there is no AtmosphereResource associated with it.
-        policy = new BroadcasterLifeCyclePolicy.Builder().policy(
-                BroadcasterLifeCyclePolicy.ATMOSPHERE_RESOURCE_POLICY.EMPTY_DESTROY).build();
-        this.meteor.getBroadcaster().setBroadcasterLifeCyclePolicy(policy);
+        this.meteor.getBroadcaster().setBroadcasterLifeCyclePolicy(BroadcasterLifeCyclePolicy.EMPTY_DESTROY);
     }
 
     public void suspend() {
@@ -124,7 +125,7 @@ public class RequestImpl implements Request, AtmosphereResourceEventListener {
 
     private void disconnect() {
         try {
-            getSession().disconnect();
+            session.disconnect();
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
