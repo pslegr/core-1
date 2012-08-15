@@ -44,7 +44,7 @@ import org.richfaces.webapp.PushHandlerFilter;
 
 @RunWith(Arquillian.class)
 @WarpTest
-public class CopyOfPushTest {
+public class TestClientDisconnectsOnNavigationPushTest {
 
     @Drone
     WebDriver driver;
@@ -55,7 +55,7 @@ public class CopyOfPushTest {
     @Deployment
     public static WebArchive createDeployment() {
 
-        CoreDeployment deployment = new CoreDeployment(CopyOfPushTest.class);
+        CoreDeployment deployment = new CoreDeployment(TestClientDisconnectsOnNavigationPushTest.class);
 
 
         deployment.addMavenDependency(
@@ -64,7 +64,8 @@ public class CopyOfPushTest {
                 "org.richfaces.ui.core:richfaces-ui-core-api",
                 "org.richfaces.ui.core:richfaces-ui-core-ui");
 
-        FaceletAsset pushPage = new FaceletAsset().body("<a4j:push address=\"" + Commons.TOPIC + "\" />");
+        FaceletAsset pushPage = new FaceletAsset().body("<script>window.RichFaces.Push.logLevel = 'debug';</script>" + 
+                "<a4j:push address=\"" + Commons.TOPIC + "\" ondataavailable=\"console.log('a4j:push response: ' + event.rf.data)\" />");
 
         deployment.archive()
                 /** ROOT */
@@ -207,11 +208,11 @@ public class CopyOfPushTest {
             
             
             Session oldSession = getSessionWithId(oldSessionId);
-            assertNotNull("old session must not be destroyed", oldSession);
+            assertNull("old session must be destroyed", oldSession);
             
-            int oldSessionMessageCount = oldSession.getMessages().size();
-            
-            assertTrue("there must be one or two messages undelivered for old session", oldSessionMessageCount == 1 || oldSessionMessageCount == 2);
+//            int oldSessionMessageCount = oldSession.getMessages().size();
+//            
+//            assertTrue("there must be one or two messages undelivered for old session", oldSessionMessageCount == 1 || oldSessionMessageCount == 2);
         }
     }
     
