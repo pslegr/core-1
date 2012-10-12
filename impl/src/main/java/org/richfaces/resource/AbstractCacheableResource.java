@@ -199,6 +199,10 @@ public abstract class AbstractCacheableResource extends AbstractBaseResource imp
                 headers.put("Cache-Control", "max-age=" + maxAge);
             }
 
+            if ("no-cache".equalsIgnoreCase(headers.get("Pragma"))) {
+                headers.remove("Pragma");
+            }
+
             String entityTag = getEntityTag(facesContext);
 
             if (entityTag != null) {
