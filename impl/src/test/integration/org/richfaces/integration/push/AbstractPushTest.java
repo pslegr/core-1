@@ -85,8 +85,10 @@ public class AbstractPushTest {
                         driver.navigate().to(contextPath);
                     }
                 })
-            .observe(new UriRequestFilter("__richfacesPushAsync"))
-            .inspect(new PushServletAssertion());
+            .group()
+                .observe(new UriRequestFilter("__richfacesPushAsync"))
+                .inspect(new PushServletAssertion())
+            .execute();
 
         waitAjax().withTimeout(5,  SECONDS).until(titleIs("message-received: 1"));
     }

@@ -348,10 +348,10 @@ public class CoreDeployment extends Deployment {
 
         // TODO versions have to be loaded from POM
         addMavenDependency(
-                "org.atmosphere:atmosphere-runtime:1.0.0.beta5",
-                "org.atmosphere:atmosphere-compat-jbossweb:1.0.0.beta5",
-                "org.atmosphere:atmosphere-compat-tomcat:1.0.0.beta5",
-                "org.atmosphere:atmosphere-compat-tomcat7:1.0.0.beta5");
+                "org.atmosphere:atmosphere-runtime:1.0.10",
+                "org.atmosphere:atmosphere-compat-jbossweb:1.0.10",
+                "org.atmosphere:atmosphere-compat-tomcat:1.0.10",
+                "org.atmosphere:atmosphere-compat-tomcat7:1.0.10");
 
         return this;
     }

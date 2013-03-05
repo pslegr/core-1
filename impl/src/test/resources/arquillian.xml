@@ -22,13 +22,51 @@
 
     <defaultProtocol type="Servlet 3.0" />
 
-    <!-- <engine>
+    <!--<engine>
         <property name="deploymentExportPath">target/</property>
-    </engine> -->
-    
-    <container qualifier="jboss" default="true">
+    </engine>-->
+
+    <container qualifier="jbossas71" default="${arquillian.launch.jbossas71}">
         <configuration>
             <property name="jbossHome">${jbossHome}</property>
+        </configuration>
+    </container>
+
+    <container qualifier="tomcat6" default="${arquillian.launch.tomcat6}">
+        <configuration>
+            <property name="catalinaHome">${catalinaHome}</property>
+            <property name="javaVmArguments">
+                -Dcom.sun.management.jmxremote.port=8089 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
+            </property>
+            <property name="user">admin</property>
+            <property name="pass">pass</property>
+        </configuration>
+    </container>
+
+    <container qualifier="tomcat7" default="${arquillian.launch.tomcat7}">
+        <configuration>
+            <property name="catalinaHome">${catalinaHome}</property>
+            <property name="javaVmArguments">
+                -Dcom.sun.management.jmxremote.port=8089 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
+            </property>
+            <property name="user">admin</property>
+            <property name="pass">pass</property>
+        </configuration>
+    </container>
+    
+    <container qualifier="tomee15" default="${arquillian.launch.tomee15}">
+        <configuration>
+            <property name="httpPort">8080</property>
+            <property name="stopPort">9005</property>
+            <property name="version">${version.tomee15}</property>
+            <property name="dir">target/apache-tomee-webprofile-${version.tomee15}</property>
+            <property name="appWorkingDir">target/arquillian-test-working-dir</property>
+        </configuration>
+    </container>
+    
+    <container qualifier="glassfish31" default="${arquillian.launch.glassfish31}">
+        <configuration>
+            <property name="glassFishHome">${glassFishHome}</property>
         </configuration>
     </container>
 
@@ -41,6 +79,12 @@
 
         <property name="chromeDriverBinary">/opt/google/chrome/chromedriver</property>
 
+    </extension>
+    
+    <extension qualifier="richfaces">
+        <property name="richfacesVersion">${arquillian.richfaces.version}</property>
+        <property name="servletContainerSetup">${arquillian.richfaces.servletContainerSetup}</property>
+        <property name="jsfImplementation">${arquillian.richfaces.jsfImplementation}</property>
     </extension>
 
 </arquillian>
