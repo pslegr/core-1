@@ -40,9 +40,9 @@ public class AbstractPushTest {
     @ArquillianResource
     URL contextPath;
 
-    public static CoreDeployment createBasicDeployment() {
+    public static CoreDeployment createBasicDeployment(Class<?> testClass) {
 
-        CoreDeployment deployment = new CoreDeployment(null);
+        CoreDeployment deployment = new CoreDeployment(testClass);
 
 
         deployment.addMavenDependency(
