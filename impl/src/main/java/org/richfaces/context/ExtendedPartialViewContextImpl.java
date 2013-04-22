@@ -33,6 +33,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.visit.VisitCallback;
@@ -533,16 +534,12 @@ public class ExtendedPartialViewContextImpl extends ExtendedPartialViewContext {
 
                 try {
                     writer.startUpdate(target.getClientId(ctx));
-                    try {
-                        // do the default behavior...
-                        target.encodeAll(ctx);
-                    } catch (Exception ce) {
-                        logException(ce);
-                    }
-
+                    // do the default behavior...
+                    target.encodeAll(ctx);
                     writer.endUpdate();
                 } catch (IOException e) {
                     logException(e);
+                    throw new FacesException(e);
                 }
             }
 
